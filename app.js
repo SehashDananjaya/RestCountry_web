@@ -20,14 +20,18 @@ function loadcountry() {
                             <div class="card shadow-sm"  >
                                 <img src="${element.flags.png}"  alt="" >
                                 <div class="card-body">
-                                <p class="card-text" >This is a ${element.name.common}wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                    <button type="button" onclick="loadModalData(${index})" class="btn btn-sm btn-outline-secondary"data-bs-toggle="modal" data-bs-target="#exampleModal">View More</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    <p> <strong>Country Name:</strong> ${element.name.common} <br>
+                                        <strong>Official Name:</strong> ${element.name.official} <br>
+                                        <strong>Capital:</strong> ${element.capital ? element.capital[0] : "N/A"} <br>
+                                        <strong>Region:</strong> ${element.region} <br>
+                                        <strong>Population:</strong> ${element.population.toLocaleString()} <br> </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" onclick="loadModalData(${index})" class="btn btn-sm btn-outline-secondary"data-bs-toggle="modal" data-bs-target="#exampleModal">View Flag</button>
+                                            
+                                        </div>
+                                        
                                     </div>
-                                    <small class="text-body-secondary">9 mins</small>
-                                </div>
                                 </div>
                             </div>
               
@@ -53,7 +57,9 @@ async function loadModalData(index) {
 
     let modelBody = document.getElementById("modal-body");
     console.log(countriesArrayList[index]);
-    modelBody.innerHTML = `<img src="${countriesArrayList[index].flags.png}"  alt="" >`
+    modelBody.innerHTML = `<img src="${countriesArrayList[index].flags.png}"  alt="" >
+    
+                `
 
 
 
@@ -64,12 +70,24 @@ async function loadModalData(index) {
 function search() {
     let searchvalue = document.getElementById("txtSearch").value;
 
-    console.log(searchvalue);
+    //console.log(searchvalue);
 
 
     fetch(`https://restcountries.com/v3.1/name/${searchvalue}`).then(res => res.json())
         .then(data => {
-            console.log(data);
+            //console.log(data);
+
+            let modelBody = document.getElementById("modal-body");
+            console.log(data[0].name.common);
+            modelBody.innerHTML = `<br> <img src="${data[index].flags.png}"  alt="" >
+            <br>
+            <strong>Country Name:</strong> ${data[0].name.common} <br>
+                 <strong>Official Name:</strong> ${data[0].name.official} <br>
+                <strong>Capital:</strong> ${data[0].capital ? data[0].capital[0] : "N/A"} <br>
+                <strong>Region:</strong> ${data[0].region} <br>
+                <strong>Population:</strong> ${data[0].population.toLocaleString()} <br>`
+
+
 
         })
 
